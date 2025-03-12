@@ -7,7 +7,7 @@ class CharacterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rick and Morty Characters'),
+        title: const Text('Rick and Morty Character'),
       ),
     );
   }
