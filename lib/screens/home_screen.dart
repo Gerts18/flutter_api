@@ -13,11 +13,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final scrollControler = ScrollController(  );
+  bool isLoading = false;
+  int page = 1;
+
   @override /*Esto lo ponemos para que en cuanto se dibuje el widget se pueda llamar a la Api */
   void initState() {
     super.initState();
     final apiProvider = Provider.of<ApiProvider>(context, listen: false);
-    apiProvider.getCharacters(); //Obtenemos los personajes
+    apiProvider.getCharacters(page); //Obtenemos los personajes
+    scrollControler.addListener(() async {
+      if(scrollControler.position.pixels == scrollControler.position.maxScrollExtent){ //Si ya estamos en el final de la pagina
+        setState(() {
+          isLoading = true;
+        });
+        page ++;
+        await apiProvider.getCharacters(page);
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
   }
 
   @override
@@ -39,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
             apiProvider.characters.isNotEmpty
                 ? CharacterList(
                   apiProvider: apiProvider,
+                  scrollController: scrollControler,
+                  isLoading: isLoading,
                 ) //En caso de que la lista no este vacia vamos a cargar la lista de personajes
                 : Center(
                   child:
@@ -50,21 +69,24 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class CharacterList extends StatelessWidget {
-  const CharacterList({super.key, required this.apiProvider});
+  const CharacterList({super.key, required this.apiProvider, required this.scrollController, required this.isLoading});
 
   final ApiProvider apiProvider;
+  final ScrollController scrollController;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 1,
+            childAspectRatio: 1.5,
             mainAxisSpacing: 10,
             crossAxisSpacing: 10
             
           ), //La forma que va a tener el gri view 
         itemCount: apiProvider.characters.length,
+        controller: scrollController,
         itemBuilder: (context, index){
           final character = apiProvider.characters[index];
           return GestureDetector(

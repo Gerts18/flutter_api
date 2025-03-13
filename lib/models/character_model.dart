@@ -60,7 +60,7 @@ class Character {
     int? id;
     String? name;
     Status? status;
-    Species? species;
+    String? species;
     String? type;
     Gender? gender;
     Location? origin;
@@ -89,7 +89,7 @@ class Character {
         id: json["id"],
         name: json["name"],
         status: statusValues.map[json["status"]]!,
-        species: speciesValues.map[json["species"]]!,
+        species: json["species"],
         type: json["type"],
         gender: genderValues.map[json["gender"]]!,
         origin: json["origin"] == null ? null : Location.fromJson(json["origin"]),
@@ -104,7 +104,7 @@ class Character {
         "id": id,
         "name": name,
         "status": statusValues.reverse[status],
-        "species": speciesValues.reverse[species],
+        "species": species,
         "type": type,
         "gender": genderValues.reverse[gender],
         "origin": origin?.toJson(),
@@ -131,15 +131,18 @@ final genderValues = EnumValues({
 class Location {
     String? name;
     String? url;
+    String? species;
 
     Location({
         this.name,
         this.url,
+        this.species
     });
 
     factory Location.fromJson(Map<String, dynamic> json) => Location(
         name: json["name"],
         url: json["url"],
+        species: json["species"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -147,16 +150,6 @@ class Location {
         "url": url,
     };
 }
-
-enum Species {
-    ALIEN,
-    HUMAN
-}
-
-final speciesValues = EnumValues({
-    "Alien": Species.ALIEN,
-    "Human": Species.HUMAN
-});
 
 enum Status {
     ALIVE,

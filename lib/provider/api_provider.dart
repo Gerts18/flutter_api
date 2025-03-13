@@ -7,11 +7,18 @@ class ApiProvider with ChangeNotifier {
 
   List<Character> characters = [];
 
-  Future <void> getCharacters() async {
-    final result = await http.get(Uri.https(url, "/api/character")); //Hacemos una llamada del tipo GET al endpoint de personajes
-    final response = characterResponseFromJson(result.body);//Parseamos la respuesta con nuestro modelo
-    characters.addAll(response.results!); //Almacenamos los resultados
-    notifyListeners(); //Notificamos el cambio 
+  Future<void> getCharacters(int page) async {
+    try {
+      final result = await http.get(
+        Uri.https(url, "/api/character", {"page": page.toString()}),
+      );
+      print(result.body);
+      final response = characterResponseFromJson(result.body);
+      characters.addAll(response.results!);
+      notifyListeners();
+    } catch (e) {
+      // Manejo de error
+      print('Error al obtener personajes: $e');
+    }
   }
-
 }
