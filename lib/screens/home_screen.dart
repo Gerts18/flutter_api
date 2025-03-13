@@ -57,13 +57,33 @@ class CharacterList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), //La forma que va a tener el gri view 
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10
+            
+          ), //La forma que va a tener el gri view 
         itemCount: apiProvider.characters.length,
         itemBuilder: (context, index){
           final character = apiProvider.characters[index];
           return GestureDetector(
+            onTap: (){
+                context.go('/character');
+              },
             child: Card(
-              child: Text(character.name!),
+              child: Column(
+                children: [
+                  FadeInImage(
+                    placeholder: AssetImage('assets/images/portal.gif'), 
+                    image: NetworkImage(character.image!)
+                    ),
+                  Text(character.name!, style: TextStyle( 
+                    fontSize: 16,
+                    overflow: TextOverflow.ellipsis,
+                   ),)
+                ],
+              )
             )
           );
         } ,
