@@ -12,7 +12,6 @@ class ApiProvider with ChangeNotifier {
       final result = await http.get(
         Uri.https(url, "/api/character", {"page": page.toString()}),
       );
-      print(result.body);
       final response = characterResponseFromJson(result.body);
       characters.addAll(response.results!);
       notifyListeners();

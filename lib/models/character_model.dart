@@ -85,6 +85,12 @@ class Character {
         this.created,
     });
 
+    // Getter para retornar status como string
+    String get statusString => statusValues.reverse[status] ?? '';
+
+    // Nuevo getter para retornar gender como string
+    String get genderString => genderValues.reverse[gender] ?? '';
+
     factory Character.fromJson(Map<String, dynamic> json) => Character(
         id: json["id"],
         name: json["name"],

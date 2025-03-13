@@ -13,8 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  final scrollControler = ScrollController(  );
+  final scrollControler = ScrollController();
   bool isLoading = false;
   int page = 1;
 
@@ -24,11 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final apiProvider = Provider.of<ApiProvider>(context, listen: false);
     apiProvider.getCharacters(page); //Obtenemos los personajes
     scrollControler.addListener(() async {
-      if(scrollControler.position.pixels == scrollControler.position.maxScrollExtent){ //Si ya estamos en el final de la pagina
+      if (scrollControler.position.pixels ==
+          scrollControler.position.maxScrollExtent) {
+        //Si ya estamos en el final de la pagina
         setState(() {
           isLoading = true;
         });
-        page ++;
+        page++;
         await apiProvider.getCharacters(page);
         setState(() {
           isLoading = false;
@@ -63,13 +64,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   child:
                       CircularProgressIndicator(), //Si la lista esta vacia, vamos a mostrar un indicador de carga
                 ),
-      ), 
+      ),
     );
   }
 }
 
 class CharacterList extends StatelessWidget {
-  const CharacterList({super.key, required this.apiProvider, required this.scrollController, required this.isLoading});
+  const CharacterList({
+    super.key,
+    required this.apiProvider,
+    required this.scrollController,
+    required this.isLoading,
+  });
 
   final ApiProvider apiProvider;
   final ScrollController scrollController;
@@ -77,38 +83,69 @@ class CharacterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cálculo dinámico de columnas basado en el ancho de la pantalla
+    final deviceWidth = MediaQuery.of(context).size.width;
+    // Calcula y limita el crossAxisCount a un mínimo de 2 y máximo de 4
+    int crossAxisCount = (deviceWidth / 200).floor();
+    if (crossAxisCount < 2) crossAxisCount = 2;
+    if (crossAxisCount > 4) crossAxisCount = 4;
+    
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.5,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10
-            
-          ), //La forma que va a tener el gri view 
-        itemCount: apiProvider.characters.length,
-        controller: scrollController,
-        itemBuilder: (context, index){
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: 1.5,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+      ), //La forma que va a tener el gri view
+      itemCount:
+          isLoading
+              ? apiProvider.characters.length + 2
+              : apiProvider.characters.length,
+      controller: scrollController,
+      itemBuilder: (context, index) {
+        if (index < apiProvider.characters.length) {
+
           final character = apiProvider.characters[index];
           return GestureDetector(
-            onTap: (){
-                context.go('/character');
-              },
+            onTap: () {
+              context.go('/character', extra: character);
+            },
             child: Card(
               child: Column(
                 children: [
-                  FadeInImage(
-                    placeholder: AssetImage('assets/images/portal.gif'), 
-                    image: NetworkImage(character.image!)
+                  Expanded(
+                    child: Hero(
+                      tag: character.id!,
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/images/portal.gif'),
+                        image: NetworkImage(character.image!),
+                        fit: BoxFit.contain,
+                        height: double.infinity,
+                        width: double.infinity,
+                      ),
                     ),
-                  Text(character.name!, style: TextStyle( 
-                    fontSize: 16,
-                    overflow: TextOverflow.ellipsis,
-                   ),)
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      character.name!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
                 ],
-              )
-            )
+              ),
+            ),
           );
-        } ,
-      );
+
+        }else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
   }
 }
