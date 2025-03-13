@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/models/character_model.dart';
+import 'package:rick_and_morty_app/provider/api_provider.dart';
 
 class CharacterScreen extends StatelessWidget {
   final Character character;
@@ -56,6 +58,7 @@ class CharacterScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20),
               textAlign: TextAlign.center,
             ),
+            EpisodesList(size: size, character: character)
           ],
         ),
       ),
@@ -79,3 +82,42 @@ Widget cardData(String dataTitle, String data) {
   );
 }
 
+class EpisodesList extends StatefulWidget {
+  const EpisodesList({super.key, required this.size, required this.character});
+
+  final Size size;
+  final Character character;
+
+  @override
+  State<EpisodesList> createState() => _EpisodesListState();
+}
+
+class _EpisodesListState extends State<EpisodesList> {
+
+  @override
+  void initState() {
+    super.initState();
+    final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+    apiProvider.getEpisodes(widget.character);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final apiProvider = Provider.of<ApiProvider>(context);
+    return SizedBox(
+      height: widget.size.height * 0.35,
+      child: ListView.builder(
+          itemCount: apiProvider.episodes.length,
+          itemBuilder: (context, index){
+            final episode = apiProvider.episodes[index];
+            return ListTile(
+              leading: Text(episode.episode!),
+              title: Text(episode.name!),
+              trailing: Text(episode.airDate!),
+            );
+          },
+        ),
+    );
+  }
+}
