@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+// Modelo para mostrar los datos de un episodio
 //
 //     final episodeResponse = episodeResponseFromJson(jsonString);
 

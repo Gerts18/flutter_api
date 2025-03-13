@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+// Modelo para mostrar los datos de un personaje 
 //
 //     final characterResponse = characterResponseFromJson(jsonString);
 
@@ -10,7 +10,7 @@ String characterResponseToJson(CharacterResponse data) => json.encode(data.toJso
 
 class CharacterResponse {
     Info? info;
-    List<Result>? results;
+    List<Character>? results;
 
     CharacterResponse({
         this.info,
@@ -19,7 +19,7 @@ class CharacterResponse {
 
     factory CharacterResponse.fromJson(Map<String, dynamic> json) => CharacterResponse(
         info: json["info"] == null ? null : Info.fromJson(json["info"]),
-        results: json["results"] == null ? [] : List<Result>.from(json["results"]!.map((x) => Result.fromJson(x))),
+        results: json["results"] == null ? [] : List<Character>.from(json["results"]!.map((x) => Character.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -56,7 +56,7 @@ class Info {
     };
 }
 
-class Result {
+class Character {
     int? id;
     String? name;
     Status? status;
@@ -70,7 +70,7 @@ class Result {
     String? url;
     DateTime? created;
 
-    Result({
+    Character({
         this.id,
         this.name,
         this.status,
@@ -85,7 +85,7 @@ class Result {
         this.created,
     });
 
-    factory Result.fromJson(Map<String, dynamic> json) => Result(
+    factory Character.fromJson(Map<String, dynamic> json) => Character(
         id: json["id"],
         name: json["name"],
         status: statusValues.map[json["status"]]!,
