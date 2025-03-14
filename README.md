@@ -1,4 +1,4 @@
-
+<body>
     <h1 align="center">Rick and Morty Api con flutter</h1>
     
     <p align="center">
@@ -13,11 +13,13 @@
     </ul>
     
     <h2>Instalación</h2>
+
     <pre>
         <code>
+
     # Clonar el repositorio
     git clone https://github.com/Gerts18/flutter_api.git
-    cd repositorio
+    cd flutter_api
 
     # Instalar dependencias
     flutter pub get
@@ -27,6 +29,14 @@
 
         </code>
     </pre>
+
+    <h2>Funcionalidades</h2>
+    <ul>
+        <li>Ver la lista de personajes</li>
+        <li>Ver la información de un personaje</li>
+        <li>Ver la lista de episodios en los que aparece un personaje</li>
+        <li>Buscar personajes por nombre</li>
+    </ul>
     
     <h2>Sobre el desarrollo: </h2>
 
@@ -36,3 +46,6 @@
         <li> Se utilizo <a href='https://app.quicktype.io/' >  <strong> quicktype </strong>  </a>  para crear los modelos correspondientes. </li>
         <li> Se diseño de manera <strong>responsiva </strong> para que se adapte a diferentes tamaños de pantalla </li>
     </ul>
+
+</body>
+```
