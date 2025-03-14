@@ -34,9 +34,7 @@ class CharacterScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               height: size.height * 0.14,
-              width:
-                  double
-                      .infinity, //Cambiar para que se vea mejor en dispositivos mas anchos
+              width: size.width * 0.9,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -111,6 +109,7 @@ class _EpisodesListState extends State<EpisodesList> {
     final apiProvider = Provider.of<ApiProvider>(context);
     return SizedBox(
       height: widget.size.height * 0.35,
+      width: widget.size.width * 0.9,
       child: ListView.builder(
           itemCount: apiProvider.episodes.length,
           itemBuilder: (context, index){

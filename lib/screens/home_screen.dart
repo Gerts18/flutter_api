@@ -102,7 +102,7 @@ class CharacterList extends StatelessWidget {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1.2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
       ), //La forma que va a tener el gri view
@@ -120,17 +120,23 @@ class CharacterList extends StatelessWidget {
               context.go('/character', extra: character);
             },
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Column(
                 children: [
                   Expanded(
-                    child: Hero(
-                      tag: character.id!,
-                      child: FadeInImage(
-                        placeholder: AssetImage('assets/images/portal.gif'),
-                        image: NetworkImage(character.image!),
-                        fit: BoxFit.contain,
-                        height: double.infinity,
-                        width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top:20.0),
+                      child: Hero(
+                        tag: character.id!,
+                        child: FadeInImage(
+                          placeholder: AssetImage('assets/images/portal.gif'),
+                          image: NetworkImage(character.image!),
+                          fit: BoxFit.contain,
+                          height: double.infinity,
+                          width: double.infinity,
+                        ),
                       ),
                     ),
                   ),
