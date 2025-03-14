@@ -8,6 +8,7 @@ import 'package:rick_and_morty_app/provider/api_provider.dart';
 import 'package:rick_and_morty_app/screens/character_screen.dart';
 import 'package:rick_and_morty_app/screens/home_screen.dart';
 
+
 void main() => runApp(const MyApp());
 
 final GoRouter _router = GoRouter(

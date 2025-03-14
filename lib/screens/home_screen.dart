@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/provider/api_provider.dart';
+import 'package:rick_and_morty_app/widgets/search_delegate.dart';
 
-/* Pantalla principal de la aplicación donde se mostrara una lista de todos los personajes de la serie Rick and Morty. */
+// Pantalla principal de la aplicación donde se mostrara una lista de todos los personajes de la serie Rick and Morty.
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,6 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: (){
+              showSearch(context: context, delegate: SearchCharacter());
+            }
+          , icon: Icon(Icons.search)
+          )
+        ],
       ),
       body: SizedBox(
         height: double.infinity,

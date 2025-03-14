@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/models/character_model.dart';
 import 'package:rick_and_morty_app/provider/api_provider.dart';
 
+// Pantalla que muestra la información de un personaje en especifico
+
 class CharacterScreen extends StatelessWidget {
   final Character character;
 
@@ -65,6 +67,8 @@ class CharacterScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 Widget cardData(String dataTitle, String data) {
   return Expanded(
