@@ -10,14 +10,22 @@
         <li>Emulador o dispositivo físico</li>
     </ul>
     <h2>Instalación</h2>
+    <h3>Clonar el repositorio</h3>
     <pre>
         <code>
-    # Clonar el repositorio
     git clone https://github.com/Gerts18/flutter_api.git
     cd flutter_api
-    # Instalar dependencias
+        </code>
+    </pre>
+    <h3>Instalar dependencias</h3>
+    <pre>
+        <code>
     flutter pub get
-    # Ejecutar en un emulador o dispositivo
+        </code>
+    </pre>
+    <h3>Correr la aplicación</h3>
+    <pre>
+        <code>
     flutter run
         </code>
     </pre>
